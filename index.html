@@ -4,262 +4,102 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Bannychef — De app die automatisch een weekmenu voor jouw gezin maakt. Nooit meer bedenken wat je vanavond eet.">
-<meta property="og:title" content="Bannychef — Het weekmenu dat zichzelf maakt">
-<meta property="og:description" content="Nooit meer bedenken wat je vanavond eet. Bannychef maakt automatisch een weekmenu voor jouw gezin.">
-<meta property="og:url" content="https://bannychef.nl">
 <title>Bannychef — Het weekmenu dat zichzelf maakt</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --beige: #e6e3d6;
-    --beige-dark: #dbcab9;
-    --ink: #1a1a1a;
-    --ink2: #444;
-    --ink3: #888;
-    --orange: #e07040;
-    --green: #547543;
-    --green-light: #70a762;
-    --yellow: #fdcc41;
-    --pink: #fd8ca6;
-    --red: #9c2f10;
-    --white: #ffffff;
-  }
-
+  :root { --beige: #e6e3d6; --ink: #1a1a1a; --ink2: #444; --ink3: #888; --orange: #e07040; --green: #547543; --yellow: #fdcc41; --pink: #fd8ca6; --white: #ffffff; }
   html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Lexend Deca', 'Helvetica Neue', sans-serif;
-    background: var(--beige);
-    color: var(--ink);
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    padding: 16px 40px;
-    display: flex; align-items: center; justify-content: space-between;
-    background: rgba(230,227,214,0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-  }
+  body { font-family: 'Lexend Deca', 'Helvetica Neue', sans-serif; background: var(--beige); color: var(--ink); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; background: rgba(230,227,214,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(0,0,0,0.06); }
   nav img.logo { height: 34px; }
   .nav-links { display: flex; align-items: center; gap: 32px; }
   .nav-links a { font-size: 14px; color: var(--ink2); text-decoration: none; font-weight: 500; }
-  .nav-links a:hover { color: var(--ink); }
-  .btn-nav {
-    background: var(--ink); color: var(--white);
-    text-decoration: none; padding: 10px 22px;
-    border-radius: 100px; font-size: 14px; font-weight: 700;
-    transition: background 150ms;
-  }
-  .btn-nav:hover { background: #333; }
-
-  /* BUTTONS */
-  .btn-primary {
-    display: inline-block; background: var(--ink); color: var(--white);
-    text-decoration: none; padding: 15px 32px;
-    border-radius: 100px; font-size: 16px; font-weight: 700;
-    transition: background 150ms, transform 100ms;
-  }
-  .btn-primary:hover { background: #333; transform: translateY(-1px); }
-  .btn-outline {
-    display: inline-block; background: var(--white); color: var(--ink);
-    text-decoration: none; padding: 15px 32px;
-    border-radius: 100px; font-size: 16px; font-weight: 700;
-    border: 2px solid var(--ink);
-    transition: background 150ms, transform 100ms;
-  }
-  .btn-outline:hover { background: #f5f5f5; transform: translateY(-1px); }
-
-  /* SECTIONS */
+  .btn-nav { background: var(--ink); color: var(--white); text-decoration: none; padding: 10px 22px; border-radius: 100px; font-size: 14px; font-weight: 700; }
+  .btn-primary { display: inline-block; background: var(--ink); color: var(--white); text-decoration: none; padding: 15px 32px; border-radius: 100px; font-size: 16px; font-weight: 700; }
+  .btn-outline { display: inline-block; background: var(--white); color: var(--ink); text-decoration: none; padding: 15px 32px; border-radius: 100px; font-size: 16px; font-weight: 700; border: 2px solid var(--ink); }
   .section { padding: 80px 24px; max-width: 900px; margin: 0 auto; }
-  .sub {
-    font-size: 11px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 2px; color: var(--ink3); margin-bottom: 14px;
-  }
-  h2 {
-    font-size: clamp(30px, 5vw, 48px); font-weight: 800;
-    letter-spacing: -1.5px; line-height: 1.05; margin-bottom: 18px;
-  }
+  .sub { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--ink3); margin-bottom: 14px; }
+  h2 { font-size: clamp(30px, 5vw, 48px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.05; margin-bottom: 18px; }
   h2 em { font-style: normal; color: var(--orange); }
-  .lead {
-    font-size: 17px; color: var(--ink2); line-height: 1.7;
-    max-width: 520px;
-  }
-
-  /* HERO */
-  .hero {
-    padding-top: 150px; padding-bottom: 40px;
-    text-align: center; max-width: 900px; margin: 0 auto; padding-left: 24px; padding-right: 24px;
-  }
-  .hero h1 {
-    font-size: clamp(44px, 9vw, 88px); font-weight: 800;
-    line-height: 0.95; letter-spacing: -3px; margin-bottom: 24px;
-  }
+  .lead { font-size: 17px; color: var(--ink2); line-height: 1.7; max-width: 520px; }
+  .hero { padding-top: 150px; padding-bottom: 40px; text-align: center; max-width: 900px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+  .hero h1 { font-size: clamp(44px, 9vw, 88px); font-weight: 800; line-height: 0.95; letter-spacing: -3px; margin-bottom: 24px; }
   .hero h1 em { font-style: normal; color: var(--orange); }
-  .hero p {
-    font-size: 19px; color: var(--ink2); line-height: 1.6;
-    max-width: 500px; margin: 0 auto 36px;
-  }
+  .hero p { font-size: 19px; color: var(--ink2); line-height: 1.6; max-width: 500px; margin: 0 auto 36px; }
   .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
   .hero-note { font-size: 13px; color: var(--ink3); margin-top: 14px; }
-
-  /* ILLUSTRATIES STRIP */
-  .illu-strip {
-    display: flex; gap: 10px; justify-content: center;
-    align-items: flex-end; margin-top: 60px; flex-wrap: wrap;
-    padding: 0 24px;
-  }
-  .illu-card {
-    border-radius: 24px; padding: 22px;
-    display: flex; align-items: center; justify-content: center;
-    transition: transform 200ms;
-  }
+  .illu-strip { display: flex; gap: 10px; justify-content: center; align-items: flex-end; margin-top: 60px; flex-wrap: wrap; padding: 0 24px; }
+  .illu-card { border-radius: 24px; padding: 22px; display: flex; align-items: center; justify-content: center; transition: transform 200ms; }
   .illu-card:hover { transform: translateY(-4px) rotate(0deg) !important; }
   .illu-card img { width: 68px; height: 68px; object-fit: contain; }
   .illu-card.lg img { width: 88px; height: 88px; }
-
-  /* FEATURES */
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 14px; margin-top: 40px;
-  }
-  .feature-card {
-    background: var(--white); border-radius: 24px;
-    padding: 28px 26px;
-    transition: transform 150ms;
-  }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 40px; }
+  .feature-card { background: var(--white); border-radius: 24px; padding: 28px 26px; transition: transform 150ms; }
   .feature-card:hover { transform: translateY(-2px); }
-  .f-icon {
-    width: 50px; height: 50px; border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 18px;
-  }
+  .f-icon { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
   .f-icon img { width: 30px; height: 30px; object-fit: contain; }
   .feature-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
   .feature-card p { font-size: 14px; color: #666; line-height: 1.65; }
-
-  /* HOE WERKT HET */
-  .how-block {
-    background: var(--ink); border-radius: 32px;
-    padding: 64px 52px; max-width: 852px;
-    margin: 0 auto;
-  }
+  .how-block { background: var(--ink); border-radius: 32px; padding: 64px 52px; max-width: 852px; margin: 0 auto; }
   .how-block .sub { color: #555; }
   .how-block h2 { color: var(--white); }
   .how-block .lead { color: #999; }
-  .steps {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-    gap: 28px; margin-top: 44px;
-  }
-  .step-num {
-    width: 38px; height: 38px; border-radius: 50%;
-    background: var(--orange);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px; font-weight: 800; color: var(--white);
-    margin-bottom: 14px;
-  }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 28px; margin-top: 44px; }
+  .step-num { width: 38px; height: 38px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: var(--white); margin-bottom: 14px; }
   .step h3 { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
   .step p { font-size: 13px; color: #777; line-height: 1.65; }
-
-  /* PRIJS */
   .price-wrap { text-align: center; }
-  .price-card {
-    background: var(--white); border-radius: 32px;
-    padding: 48px 44px; max-width: 460px;
-    margin: 40px auto 0;
-  }
-  .badge {
-    display: inline-block; background: var(--yellow);
-    color: #7a5c00; font-size: 11px; font-weight: 700;
-    padding: 5px 14px; border-radius: 100px;
-    margin-bottom: 22px;
-    text-transform: uppercase; letter-spacing: 0.5px;
-  }
-  .price-amount {
-    font-size: 60px; font-weight: 800;
-    letter-spacing: -3px; line-height: 1;
-  }
+  .price-card { background: var(--white); border-radius: 32px; padding: 48px 44px; max-width: 460px; margin: 40px auto 0; }
+  .badge { display: inline-block; background: var(--yellow); color: #7a5c00; font-size: 11px; font-weight: 700; padding: 5px 14px; border-radius: 100px; margin-bottom: 22px; text-transform: uppercase; }
+  .price-amount { font-size: 60px; font-weight: 800; letter-spacing: -3px; line-height: 1; }
   .price-amount sup { font-size: 22px; font-weight: 600; vertical-align: super; letter-spacing: 0; }
   .price-amount span { font-size: 18px; font-weight: 400; color: var(--ink3); letter-spacing: 0; }
   .price-sub { font-size: 14px; color: var(--ink3); margin-top: 6px; margin-bottom: 28px; }
   .price-list { list-style: none; text-align: left; margin-bottom: 32px; display: flex; flex-direction: column; gap: 11px; }
   .price-list li { display: flex; align-items: center; gap: 10px; font-size: 15px; }
-  .tick {
-    width: 22px; height: 22px; border-radius: 50%;
-    background: var(--green); flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-  }
+  .tick { width: 22px; height: 22px; border-radius: 50%; background: var(--green); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
   .tick svg { width: 11px; height: 11px; }
-  .btn-full {
-    display: block; width: 100%; text-align: center;
-    background: var(--ink); color: var(--white);
-    text-decoration: none; padding: 16px;
-    border-radius: 100px; font-size: 15px; font-weight: 700;
-    transition: background 150ms;
-  }
-  .btn-full:hover { background: #333; }
+  .btn-full { display: block; width: 100%; text-align: center; background: var(--ink); color: var(--white); text-decoration: none; padding: 16px; border-radius: 100px; font-size: 15px; font-weight: 700; }
   .no-cc { font-size: 12px; color: var(--ink3); margin-top: 12px; text-align: center; }
-
-  /* FOOTER */
-  footer {
-    background: var(--ink);
-    padding: 52px 32px 40px;
-    text-align: center;
-  }
+  footer { background: var(--ink); padding: 52px 32px 40px; text-align: center; }
   footer img { height: 30px; margin-bottom: 18px; opacity: 0.9; }
   footer p { font-size: 13px; color: #555; line-height: 1.8; }
   footer a { color: #666; text-decoration: none; }
   footer a:hover { color: #aaa; }
   .footer-divider { border: none; border-top: 1px solid #2a2a2a; margin: 28px auto; max-width: 400px; }
-
-  /* RESPONSIVE */
   @media (max-width: 700px) {
-    nav { padding: 14px 20px; }
-    .nav-links { display: none; }
+    nav { padding: 14px 20px; } .nav-links { display: none; }
     .how-block { padding: 40px 28px; margin: 0 16px; }
     .price-card { padding: 36px 24px; }
-    .illu-strip { gap: 8px; }
-    .illu-card { padding: 16px; }
-    .illu-card img { width: 52px; height: 52px; }
-    .illu-card.lg img { width: 68px; height: 68px; }
+    .illu-card { padding: 16px; } .illu-card img { width: 52px; height: 52px; } .illu-card.lg img { width: 68px; height: 68px; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <img class="logo" src="assets/logo-black.png" alt="Bannychef">
+  <img class="logo" src="logo's/Banny chef logo RGB_Banny chef long eggplant black.svg" alt="Bannychef">
   <div class="nav-links">
     <a href="#functies">Functies</a>
     <a href="#hoe">Hoe werkt het</a>
     <a href="#prijs">Prijs</a>
   </div>
-  <a href="https://bannychef.nl" class="btn-nav">Probeer gratis</a>
+  <a href="https://app.bannychef.nl" class="btn-nav">Login Bannychef</a>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <p class="sub">De slimme maaltijdplanner voor gezinnen</p>
   <h1>Het weekmenu<br>dat zichzelf<br><em>maakt.</em></h1>
   <p>Nooit meer bedenken wat je vanavond eet. Bannychef is de app die automatisch recepten bedenkt, afgestemd op jouw gezin.</p>
   <div class="hero-cta">
-    <a href="https://bannychef.nl" class="btn-primary">Start gratis — 14 dagen</a>
+    <a href="https://app.bannychef.nl" class="btn-primary">Probeer gratis</a>
     <a href="#hoe" class="btn-outline">Hoe werkt het?</a>
   </div>
   <p class="hero-note">Geen betaalgegevens nodig.</p>
 </div>
 
-<!-- ILLUSTRATIES STRIP -->
 <div class="illu-strip">
   <div class="illu-card" style="background:#fdcc41; transform:rotate(-3deg)">
     <img src="assets/pompoen.svg" alt="pompoen">
@@ -268,7 +108,7 @@
     <img src="assets/kip.svg" alt="kip">
   </div>
   <div class="illu-card lg" style="background:#e07040; transform:rotate(-1deg)">
-    <img src="assets/groenten.png" alt="groenten">
+    <img src="assets/aubergine.svg" alt="aubergine">
   </div>
   <div class="illu-card" style="background:#fff; transform:rotate(2deg)">
     <img src="assets/vis.svg" alt="vis">
@@ -277,93 +117,62 @@
     <img src="assets/broccoli.svg" alt="broccoli">
   </div>
   <div class="illu-card" style="background:#dbcab9; transform:rotate(1deg)">
-    <img src="assets/aubergine.svg" alt="aubergine">
+    <img src="assets/tomaat.svg" alt="tomaat">
   </div>
 </div>
 
-<!-- FUNCTIES -->
 <div class="section" id="functies">
   <p class="sub">Alles geregeld</p>
   <h2>Meer dan een<br><em>receptenapp.</em></h2>
   <p class="lead">Bannychef denkt voor je. Van weekmenu tot boodschappenlijst, alles afgestemd op jouw gezin.</p>
   <div class="features-grid">
     <div class="feature-card">
-      <div class="f-icon" style="background:#fdcc41">
-        <img src="assets/soeppan.svg" alt="">
-      </div>
+      <div class="f-icon" style="background:#fdcc41"><img src="assets/soeppan.svg" alt=""></div>
       <h3>Automatisch weekmenu</h3>
       <p>Met één druk genereert Bannychef een gevarieerd weekmenu op basis van jullie voorkeuren, allergieën en hoeveel tijd je hebt.</p>
     </div>
     <div class="feature-card">
-      <div class="f-icon" style="background:#e6e3d6">
-        <img src="assets/ui.svg" alt="">
-      </div>
+      <div class="f-icon" style="background:#e6e3d6"><img src="assets/ui.svg" alt=""></div>
       <h3>Slimme boodschappenlijst</h3>
       <p>Alle ingrediënten worden automatisch gebundeld en gesorteerd op looproute in de supermarkt. Nooit meer dubbele boodschappen.</p>
     </div>
     <div class="feature-card">
-      <div class="f-icon" style="background:#fd8ca6">
-        <img src="assets/garnaal.svg" alt="">
-      </div>
+      <div class="f-icon" style="background:#fd8ca6"><img src="assets/garnaal.svg" alt=""></div>
       <h3>Profielen per gezinslid</h3>
       <p>Voeg iedereen toe met hun eigen voorkeuren. Vegetarisch, glutenvrij, of gewoon een hekel aan spruitjes — Bannychef houdt er rekening mee.</p>
     </div>
     <div class="feature-card">
-      <div class="f-icon" style="background:#70a762">
-        <img src="assets/bonen.svg" alt="">
-      </div>
+      <div class="f-icon" style="background:#70a762"><img src="assets/bonen.svg" alt=""></div>
       <h3>Recepten opslaan</h3>
       <p>Vond je iets lekker? Sla het op in je eigen bibliotheek. Importeer recepten via URL van Allerhande, Jumbo of andere sites.</p>
     </div>
     <div class="feature-card">
-      <div class="f-icon" style="background:#dbcab9">
-        <img src="assets/wok.svg" alt="">
-      </div>
+      <div class="f-icon" style="background:#dbcab9"><img src="assets/wok.svg" alt=""></div>
       <h3>Kookweergave</h3>
       <p>Stap voor stap koken met je scherm aan. Alle stappen overzichtelijk, ingrediënten bij de hand. Jij kookt, Bannychef navigeert.</p>
     </div>
     <div class="feature-card">
-      <div class="f-icon" style="background:#fdcc41">
-        <img src="assets/tomaat.svg" alt="">
-      </div>
+      <div class="f-icon" style="background:#fdcc41"><img src="assets/champignon.svg" alt=""></div>
       <h3>Terugkijken</h3>
       <p>Benieuwd wat je vorige week at? Blader door oude weekmenu's en voeg favoriete recepten toe aan je vaste repertoire.</p>
     </div>
   </div>
 </div>
 
-<!-- HOE WERKT HET -->
 <div style="padding: 0 24px 80px;" id="hoe">
   <div class="how-block">
     <p class="sub">Zo simpel is het</p>
     <h2>Van instellen<br>tot op tafel.</h2>
     <p class="lead">In een paar minuten ingericht, daarna regelt Bannychef de rest.</p>
     <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h3>Stel je gezin in</h3>
-        <p>Voeg profielen toe met voorkeuren, allergieën en hoeveel mensen er mee-eten.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h3>Kies je kookdagen</h3>
-        <p>Geef aan op welke dagen je kookt en hoeveel tijd je hebt per avond.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h3>Genereer je menu</h3>
-        <p>Bannychef bedenkt een gevarieerd weekmenu afgestemd op jullie wensen en voorkeuren.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <h3>Doe boodschappen</h3>
-        <p>De lijst staat klaar, gesorteerd op supermarktafdeling. Jij hoeft alleen nog te scannen.</p>
-      </div>
+      <div class="step"><div class="step-num">1</div><h3>Stel je gezin in</h3><p>Voeg profielen toe met voorkeuren, allergieën en hoeveel mensen er mee-eten.</p></div>
+      <div class="step"><div class="step-num">2</div><h3>Kies je kookdagen</h3><p>Geef aan op welke dagen je kookt en hoeveel tijd je hebt per avond.</p></div>
+      <div class="step"><div class="step-num">3</div><h3>Genereer je menu</h3><p>Bannychef bedenkt een gevarieerd weekmenu afgestemd op jullie wensen en voorkeuren.</p></div>
+      <div class="step"><div class="step-num">4</div><h3>Doe boodschappen</h3><p>De lijst staat klaar, gesorteerd op supermarktafdeling. Jij hoeft alleen nog te scannen.</p></div>
     </div>
   </div>
 </div>
 
-<!-- PRIJS -->
 <div class="section price-wrap" id="prijs">
   <p class="sub">Eerlijk geprijsd</p>
   <h2>Probeer het<br><em>gratis.</em></h2>
@@ -373,39 +182,23 @@
     <div class="price-amount"><sup>€</sup>24,99 <span>/ jaar</span></div>
     <p class="price-sub">Minder dan €2,10 per maand</p>
     <ul class="price-list">
-      <li>
-        <span class="tick"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        Onbeperkt weekmenu's genereren
-      </li>
-      <li>
-        <span class="tick"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        Automatische boodschappenlijst
-      </li>
-      <li>
-        <span class="tick"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        Profielen voor elk gezinslid
-      </li>
-      <li>
-        <span class="tick"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        Recepten importeren en opslaan
-      </li>
-      <li>
-        <span class="tick"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        Kookweergave stap voor stap
-      </li>
+      <li><span class="tick"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Onbeperkt weekmenu's genereren</li>
+      <li><span class="tick"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Automatische boodschappenlijst</li>
+      <li><span class="tick"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Profielen voor elk gezinslid</li>
+      <li><span class="tick"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Recepten importeren en opslaan</li>
+      <li><span class="tick"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Kookweergave stap voor stap</li>
     </ul>
-    <a href="https://bannychef.nl" class="btn-full">Start gratis — geen betaalgegevens</a>
+    <a href="https://app.bannychef.nl" class="btn-full">Probeer gratis — geen betaalgegevens</a>
     <p class="no-cc">Na 14 dagen automatisch gestopt, tenzij je kiest voor een abonnement.</p>
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
-  <img src="assets/logo-white.png" alt="Bannychef">
+  <img src="logo's/Banny chef logo RGB_Banny chef long eggplant white.svg" alt="Bannychef">
   <p>Het weekmenu dat zichzelf maakt.</p>
   <hr class="footer-divider">
   <p>
-    <a href="https://bannychef.nl">bannychef.nl</a>
+    <a href="https://app.bannychef.nl">app.bannychef.nl</a>
     &nbsp;·&nbsp;
     <a href="mailto:bannychef@proton.me">bannychef@proton.me</a>
     &nbsp;·&nbsp;
